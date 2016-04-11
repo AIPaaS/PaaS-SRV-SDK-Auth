@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.paas.ipaas.auth.dao.interfaces.AuthHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="auth_pid" property="authPid" jdbcType="VARCHAR" />
+    <result column="auth_serviceid" property="authServiceid" jdbcType="VARCHAR" />
+    <result column="auth_date" property="authDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, auth_pid, auth_serviceid, auth_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthHistoryCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from auth_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from auth_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer" >
+    delete from auth_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthHistoryCriteria" >
+    delete from auth_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthHistory" >
+    insert into auth_history (id, auth_pid, auth_serviceid, 
+      auth_date)
+    values (#{id,jdbcType=INTEGER}, #{authPid,jdbcType=VARCHAR}, #{authServiceid,jdbcType=VARCHAR}, 
+      #{authDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthHistory" >
+    insert into auth_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="authPid != null" >
+        auth_pid,
+      </if>
+      <if test="authServiceid != null" >
+        auth_serviceid,
+      </if>
+      <if test="authDate != null" >
+        auth_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="authPid != null" >
+        #{authPid,jdbcType=VARCHAR},
+      </if>
+      <if test="authServiceid != null" >
+        #{authServiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="authDate != null" >
+        #{authDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthHistoryCriteria" resultType="java.lang.Integer" >
+    select count(*) from auth_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update auth_history
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.authPid != null" >
+        auth_pid = #{record.authPid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authServiceid != null" >
+        auth_serviceid = #{record.authServiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authDate != null" >
+        auth_date = #{record.authDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update auth_history
+    set id = #{record.id,jdbcType=INTEGER},
+      auth_pid = #{record.authPid,jdbcType=VARCHAR},
+      auth_serviceid = #{record.authServiceid,jdbcType=VARCHAR},
+      auth_date = #{record.authDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthHistory" >
+    update auth_history
+    <set >
+      <if test="authPid != null" >
+        auth_pid = #{authPid,jdbcType=VARCHAR},
+      </if>
+      <if test="authServiceid != null" >
+        auth_serviceid = #{authServiceid,jdbcType=VARCHAR},
+      </if>
+      <if test="authDate != null" >
+        auth_date = #{authDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthHistory" >
+    update auth_history
+    set auth_pid = #{authPid,jdbcType=VARCHAR},
+      auth_serviceid = #{authServiceid,jdbcType=VARCHAR},
+      auth_date = #{authDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

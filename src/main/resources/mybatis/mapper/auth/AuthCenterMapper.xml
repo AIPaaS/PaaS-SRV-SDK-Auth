@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.paas.ipaas.auth.dao.interfaces.AuthCenterMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthCenter" >
+    <id column="AUTH_ID" property="authId" jdbcType="BIGINT" />
+    <result column="AUTH_PID" property="authPid" jdbcType="VARCHAR" />
+    <result column="AUTH_PASSWORD" property="authPassword" jdbcType="VARCHAR" />
+    <result column="AUTH_SOURCE" property="authSource" jdbcType="VARCHAR" />
+    <result column="AUTH_USER_ID" property="authUserId" jdbcType="VARCHAR" />
+    <result column="AUTH_USER_NAME" property="authUserName" jdbcType="VARCHAR" />
+    <result column="AUTH_PARAM" property="authParam" jdbcType="VARCHAR" />
+    <result column="AUTH_STATE" property="authState" jdbcType="VARCHAR" />
+    <result column="AUTH_REGISTER_TIME" property="authRegisterTime" jdbcType="TIMESTAMP" />
+    <result column="AUTH_ACTIVE_TIME" property="authActiveTime" jdbcType="TIMESTAMP" />
+    <result column="AUTH_CANCEL_TIME" property="authCancelTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AUTH_ID, AUTH_PID, AUTH_PASSWORD, AUTH_SOURCE, AUTH_USER_ID, AUTH_USER_NAME, AUTH_PARAM, 
+    AUTH_STATE, AUTH_REGISTER_TIME, AUTH_ACTIVE_TIME, AUTH_CANCEL_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthCenterCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from auth_center
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from auth_center
+    where AUTH_ID = #{authId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Long" >
+    delete from auth_center
+    where AUTH_ID = #{authId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthCenterCriteria" >
+    delete from auth_center
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthCenter" >
+    insert into auth_center (AUTH_ID, AUTH_PID, AUTH_PASSWORD, 
+      AUTH_SOURCE, AUTH_USER_ID, AUTH_USER_NAME, 
+      AUTH_PARAM, AUTH_STATE, AUTH_REGISTER_TIME, 
+      AUTH_ACTIVE_TIME, AUTH_CANCEL_TIME)
+    values (#{authId,jdbcType=BIGINT}, #{authPid,jdbcType=VARCHAR}, #{authPassword,jdbcType=VARCHAR}, 
+      #{authSource,jdbcType=VARCHAR}, #{authUserId,jdbcType=VARCHAR}, #{authUserName,jdbcType=VARCHAR}, 
+      #{authParam,jdbcType=VARCHAR}, #{authState,jdbcType=VARCHAR}, #{authRegisterTime,jdbcType=TIMESTAMP}, 
+      #{authActiveTime,jdbcType=TIMESTAMP}, #{authCancelTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthCenter" >
+    insert into auth_center
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="authId != null" >
+        AUTH_ID,
+      </if>
+      <if test="authPid != null" >
+        AUTH_PID,
+      </if>
+      <if test="authPassword != null" >
+        AUTH_PASSWORD,
+      </if>
+      <if test="authSource != null" >
+        AUTH_SOURCE,
+      </if>
+      <if test="authUserId != null" >
+        AUTH_USER_ID,
+      </if>
+      <if test="authUserName != null" >
+        AUTH_USER_NAME,
+      </if>
+      <if test="authParam != null" >
+        AUTH_PARAM,
+      </if>
+      <if test="authState != null" >
+        AUTH_STATE,
+      </if>
+      <if test="authRegisterTime != null" >
+        AUTH_REGISTER_TIME,
+      </if>
+      <if test="authActiveTime != null" >
+        AUTH_ACTIVE_TIME,
+      </if>
+      <if test="authCancelTime != null" >
+        AUTH_CANCEL_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="authId != null" >
+        #{authId,jdbcType=BIGINT},
+      </if>
+      <if test="authPid != null" >
+        #{authPid,jdbcType=VARCHAR},
+      </if>
+      <if test="authPassword != null" >
+        #{authPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="authSource != null" >
+        #{authSource,jdbcType=VARCHAR},
+      </if>
+      <if test="authUserId != null" >
+        #{authUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="authUserName != null" >
+        #{authUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="authParam != null" >
+        #{authParam,jdbcType=VARCHAR},
+      </if>
+      <if test="authState != null" >
+        #{authState,jdbcType=VARCHAR},
+      </if>
+      <if test="authRegisterTime != null" >
+        #{authRegisterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authActiveTime != null" >
+        #{authActiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authCancelTime != null" >
+        #{authCancelTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthCenterCriteria" resultType="java.lang.Integer" >
+    select count(*) from auth_center
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update auth_center
+    <set >
+      <if test="record.authId != null" >
+        AUTH_ID = #{record.authId,jdbcType=BIGINT},
+      </if>
+      <if test="record.authPid != null" >
+        AUTH_PID = #{record.authPid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authPassword != null" >
+        AUTH_PASSWORD = #{record.authPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authSource != null" >
+        AUTH_SOURCE = #{record.authSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authUserId != null" >
+        AUTH_USER_ID = #{record.authUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authUserName != null" >
+        AUTH_USER_NAME = #{record.authUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authParam != null" >
+        AUTH_PARAM = #{record.authParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authState != null" >
+        AUTH_STATE = #{record.authState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authRegisterTime != null" >
+        AUTH_REGISTER_TIME = #{record.authRegisterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.authActiveTime != null" >
+        AUTH_ACTIVE_TIME = #{record.authActiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.authCancelTime != null" >
+        AUTH_CANCEL_TIME = #{record.authCancelTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update auth_center
+    set AUTH_ID = #{record.authId,jdbcType=BIGINT},
+      AUTH_PID = #{record.authPid,jdbcType=VARCHAR},
+      AUTH_PASSWORD = #{record.authPassword,jdbcType=VARCHAR},
+      AUTH_SOURCE = #{record.authSource,jdbcType=VARCHAR},
+      AUTH_USER_ID = #{record.authUserId,jdbcType=VARCHAR},
+      AUTH_USER_NAME = #{record.authUserName,jdbcType=VARCHAR},
+      AUTH_PARAM = #{record.authParam,jdbcType=VARCHAR},
+      AUTH_STATE = #{record.authState,jdbcType=VARCHAR},
+      AUTH_REGISTER_TIME = #{record.authRegisterTime,jdbcType=TIMESTAMP},
+      AUTH_ACTIVE_TIME = #{record.authActiveTime,jdbcType=TIMESTAMP},
+      AUTH_CANCEL_TIME = #{record.authCancelTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthCenter" >
+    update auth_center
+    <set >
+      <if test="authPid != null" >
+        AUTH_PID = #{authPid,jdbcType=VARCHAR},
+      </if>
+      <if test="authPassword != null" >
+        AUTH_PASSWORD = #{authPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="authSource != null" >
+        AUTH_SOURCE = #{authSource,jdbcType=VARCHAR},
+      </if>
+      <if test="authUserId != null" >
+        AUTH_USER_ID = #{authUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="authUserName != null" >
+        AUTH_USER_NAME = #{authUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="authParam != null" >
+        AUTH_PARAM = #{authParam,jdbcType=VARCHAR},
+      </if>
+      <if test="authState != null" >
+        AUTH_STATE = #{authState,jdbcType=VARCHAR},
+      </if>
+      <if test="authRegisterTime != null" >
+        AUTH_REGISTER_TIME = #{authRegisterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authActiveTime != null" >
+        AUTH_ACTIVE_TIME = #{authActiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authCancelTime != null" >
+        AUTH_CANCEL_TIME = #{authCancelTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where AUTH_ID = #{authId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.paas.ipaas.auth.dao.mapper.bo.AuthCenter" >
+    update auth_center
+    set AUTH_PID = #{authPid,jdbcType=VARCHAR},
+      AUTH_PASSWORD = #{authPassword,jdbcType=VARCHAR},
+      AUTH_SOURCE = #{authSource,jdbcType=VARCHAR},
+      AUTH_USER_ID = #{authUserId,jdbcType=VARCHAR},
+      AUTH_USER_NAME = #{authUserName,jdbcType=VARCHAR},
+      AUTH_PARAM = #{authParam,jdbcType=VARCHAR},
+      AUTH_STATE = #{authState,jdbcType=VARCHAR},
+      AUTH_REGISTER_TIME = #{authRegisterTime,jdbcType=TIMESTAMP},
+      AUTH_ACTIVE_TIME = #{authActiveTime,jdbcType=TIMESTAMP},
+      AUTH_CANCEL_TIME = #{authCancelTime,jdbcType=TIMESTAMP}
+    where AUTH_ID = #{authId,jdbcType=BIGINT}
+  </update>
+</mapper>
